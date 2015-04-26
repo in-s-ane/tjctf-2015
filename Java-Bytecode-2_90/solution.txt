@@ -1,0 +1,9 @@
+I took the easy way out.
+
+The bytecode that we're given is very easy to read, and it's quite obvious from
+lines 10 to 52 that the flag is 10 characters long and contains the ASCII
+characters specified by the integers that are pushed into the array. So all we
+have to do is just convert these numbers to characters. (See solve.png)
+
+The flag is:
+readclassy
