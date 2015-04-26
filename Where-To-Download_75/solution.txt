@@ -1,0 +1,7 @@
+Looking through the youtube source code was a pain in the ass. So, I decided to look around github for scripts that people wrote to download Youtube videos.
+I came across the following php script on this line, we get that there's a url_encoded_fmt_stream_map regex match.
+https://github.com/zarkiel/Youtube/blob/master/Youtube.php#L62
+
+So, let's look for that in the youtube source. It's defined in the yt.player global variable, which is a global json array to hold lots of configuration. Looking through the source, as well as using the browser's autocomplete, we get the location of the url_encoded_fmt_stream_map variable.
+
+Flag: ytplayer.config.args.url_encoded_fmt_stream_map
