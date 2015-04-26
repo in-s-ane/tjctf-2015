@@ -1,0 +1,34 @@
+Problem:
+    Polan of findings sneaky picture. Of thinkings picture may take password, but Polan cannot into knowings how works
+    Python has some x-tremely strange flags
+
+From the problem, we get that we must run the file given. However, this seems oddly strange... how do we run a bmp file?? Looking at the data in the bmp file, we get some javascript on the first line and valid python code in the second half. So, let's run this file, but skip the first line.
+    > python -x polandball_mess.bmp
+This prompts us for a code, which we instinctively try 's00pers3cuRe' since that's the key in polandball_mess.bmp, but it doesn't work.
+
+So, let's change the exec("".join(c)) statement to a print "".join(c) to see what happens. When we run the file again this time, we get some valid python code. Let's pipe that into a file.
+    > python -x polandball_mess.py > poland.py
+
+Examining this file, we notice an evaluate statement on code. Let's change it to that the code is printed. Some brainfuck code is given. Ugh.
+    code = ">+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++.++++++++++++++++++++++++++++++++++++++++++++.-----------.+.-------------------------------------------.>++++++++++.>>+>+>+>+>+>+>+>+>+>+>+>+>+>+>+>+>+>+>+>+>+>+>+>+><<<<<<<<<<<<<<<<<<<<<<<<[+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++>][<]<<<<<<<<<<<<<<<<<<<<<<<<----------------------->+++++++++++++++++++++>++++++++++++++++++++++++>++++++++++++++++++++++++>+++++++++++>+++++++++>++++++++++++++++++++++++++>-------------------------------------------->---------------------------------------------------------->----------------->++++++++++++++++++++++++++>---------------------------------------------------------->+++++++++++++++>+++++++++++++++++++++++++>---------------------------------------------------------->+++++++++++++++++++++++++++++++>+++++++++++++++++++++>+++++++++++++++++++++++++++>++++++++++++++++++++++++>---------------------------------------------------------->++++++++++++>++++++++++++++++++>+++++++>+++++++++++++>>>>>>>>>>>>>>>>>>>>>>+>+>+>+>+>+>+>+>+>+>+>+>+>+>+>+>+>+>+>+>+>+><<<<<<<<<<<<<<<<<<<<<<[+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++>][<]<<<<<<<<<<<<<<<<<<<<<<------------>+++++++++++++++++++++>++++++++++++++++++++++>+++++++++++>---------------------------------------------->---------------------------------------------------------->+++++++++++++++++++++++++>+++++++++++++++++++++>++++++++++++++++++++++++>++++++++++++++++++++++++>+++++++++++++++++++++++++++++++>-------------------------------------------->---------------------------------------------------------->------>++++++++++++++++++++++++>+++++++++++++++++++++++++++++++>---------------------------------------------------------->+++++++>+++++++++++++>+++++++>+++++++++++++++>++++++++++++++++++++><<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<,+>,+>,+>,+>,+>,+>,+>,+><<<<<<<<[------------------------------------------------------------------------------------------------------------->]<<<<<<<<++++++++++>------>+++++++++++>+++>-->---->------------->++++++++>[>]+<[>]+<[>]+<[>]+<[>]+<[>]+<[>]+<[>]+<[>]+<<<<[<]>>>>>>>>>>>>>>>>>>[<]>[.>]"
+
+Examining this brainfuck code, we notice the following:
+    First, each character is incremented by 1.
+    Then 109 is subtracted from each character given.
+    Operations to the remaining characters are as follows:
+        10+
+        6-
+        11+
+        3+
+        2-
+        4-
+        13-
+        8+
+    Then it checks that the results of these are 0.
+
+So let's write a quick decrypt.py script to uncover the correct text. We get 'brainpyd'. Well that looks like what we're doing... brainfuck with python.
+
+Running the bmp file and inputting 'brainpyd' as the code, we get the following:
+    Correct. It is your flag
+
+Flag: brainpyd
