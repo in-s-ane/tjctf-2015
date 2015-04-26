@@ -1,0 +1,4 @@
+There's not much to this problem other than first decompiling the jar file that
+we're given, and reading through the validation method to construct a passcode
+that passes all the conditions. See Solve.java for an annotated source that
+simplifies that conditions that the passcode must satisfy.

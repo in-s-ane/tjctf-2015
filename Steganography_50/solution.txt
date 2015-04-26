@@ -1,0 +1,19 @@
+First, we should decompile the jar file that we're given so that we can
+recompile for our current version of Java.
+
+>> java PrintPixels image.png 
+Saved to out.txt
+
+Now, let's write up a Python script to parse this output and decode the message.
+See solve.py.
+
+The problem hint tells us: "The red and green bits seem off."
+
+If we were to examine all the LSBs of the red and green values, we would see
+that they're always zero. As a result, the message must not be hidden in the red
+and green values, but rather the blue value.
+
+>> python solve.py
+qQmNin3!
+
+The flag is: qQmNin3!

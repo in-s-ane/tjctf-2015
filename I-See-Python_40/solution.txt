@@ -1,0 +1,8 @@
+First, obviously we should decompile the pyc file that we're given. Looking at
+the source code, we find a method go() that prompts for a password and checks if
+it is correct before printing out the flag. All we have to do is just comment
+out the lines that prompt us for a password and check the validaty of the
+password.
+
+>> python i_see_python.py 
+tjctf{python_is_fun}

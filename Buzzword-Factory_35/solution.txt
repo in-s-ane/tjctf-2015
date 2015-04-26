@@ -1,0 +1,13 @@
+If we inspect the EnterpriseDeserializer class, we learn that the program splits
+the string that we give it on the colon ':' and interprets the first half as a
+class name which implements a deserialize() method. If we then look at the
+EnterpriseFlagPrinter class, we see that it implements a deserialize() method.
+All we have to do is input EnterpriseFlagPrinter:<anything> as a new buzzword
+and the program will print out the flag!
+
+So I input EnterpriseFlagPrinter:ayy after choosing the option to create a new
+buzzword and got (ironically) the flag:
+ayy lmao
+
+Yes, that's the actual flag. And yes, I could have accidentally guessed the
+flag. ayy lmao.

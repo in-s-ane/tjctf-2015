@@ -1,0 +1,29 @@
+>> python
+>>> import hashlib
+>>> hashlib.md5("Richard Stallman").hexdigest()
+'956ae5688879015fa8a3f06b0056c10e'
+
+[05:30 pm] chesley:~/Dropbox/CTFs/tjctf $
+>> nc p.tjctf.org 8087
+==== OFFICIAL GRADE ACCESS SYSTEM V1.0 ====
+ACCESS TO THIS SYSTEM IS FOR AUTHORIZED USERS ONLY!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+-- GAS Help --
+                login <key>: log in to the system using access key <key>
+admin <username> <password>: log in as administrator <username> using password <password>
+                       help: print this help
+
+command: login 956ae5688879015fa8a3f06b0056c10e
+Login successful. Now logged in as "Richard Stallman". For help run "help".
+command: view
+Your grades are:
+Free Software: F
+Spanish: A
+Precalculus: A
+theflagis: sta11man_g3ts_g00d_grad3s!
+English: A
+Chemistry: A
+History: A
+command: 
+
+
+The flag is: sta11man_g3ts_g00d_grad3s!
