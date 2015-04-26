@@ -1,0 +1,17 @@
+Looking at the source code, we notice that when we upload, it only checks the file headers for a valid image data. This is definitely vulnerable to a Remote PHP Code Execution.
+
+So, we combine a PNG file header with a php script to list the contents of the directory.
+
+> cat png-header directory-list.php > poison-image.php
+
+Then we can upload this to the server to view the contents of the root directory on the server.
+Viewing this script on the server, we get the following:
+‰PNG  flag_obdf3wodfsid0f87sb9f4bs9n90
+Dockerfile
+upload.php
+index.php
+uploads
+
+So let's see the flag! http://imageit.p.tjctf.org/flag_obdf3wodfsid0f87sb9f4bs9n90
+
+Flag: what_is_love??
