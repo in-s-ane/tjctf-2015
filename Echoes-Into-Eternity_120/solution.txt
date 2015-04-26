@@ -9,11 +9,13 @@ Then we can decompress the gzip
     > gzip -d getrekt.m9.gzip
 
 The output looks a bit like base64 encoded data...
+However, it's actually rot13'd base64 encoded data...
     > python decode.py
 
-However, it's actually rot13'd base64 encoded data...
-    >> a=open('getrekt.m9').readlines()
-    >> b=[x.strip() for x in a]
-    >> c=[x.decode('rot13').decode('base64') for x in b]
-    >> d='\n'.join(c)
-    >> open('output.txt', 'w').write(d)
+Looking at output.pcap, we notice that there's a pcap file sent in the ftp-data. We extract this by using "Follow TCP Stream" in Wireshark to get the ftp-data and save it as output2.pcap
+Looking at output2.pcap, we see a lot of IRC messages... which we extracted into irc.log and irc2.log, two different streams for sending messages? In addition, we notice that there's a lot of base64 encoded data being sent around. Let's take all of that data and decode it.
+    > python analye.py
+
+What comes out seems to yet be another pcap file. However, this one is MUCH MUCH smaller and shows a GET request for flag.html. Following the TCP Stream of this gives us the flag!
+
+Flag: BDFADD97
