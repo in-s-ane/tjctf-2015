@@ -1,0 +1,12 @@
+Using `binwalk tjctf-memes.jpg` we notice that there's a gzip file at position 305518
+
+    305518        0x4A96E         gzip compressed data, has original file name: "getrekt.m9", from Unix, last modified: Fri Mar 13 15:12:17 2015
+
+So, let's extract it:
+    > dd if=tjctf-memes.jpg of=getrekt.m9.gzip skip=305518 bs=1
+
+Then we can decompress the gzip
+    > gzip -d getrekt.m9.gzip
+
+The output looks a bit like base64 encoded data...
+    > python decode.py
