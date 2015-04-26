@@ -1,0 +1,15 @@
+When we binwalk the wav file given, we notice that there is a pdf file in there. So let's extract it.
+    > dd if=turducken.wav of=out.pdf skip=44 bs=1
+
+When we open it up, we notice that there's a LOT of morse code. So let's extract it into pdf_data.txt.
+
+Now, to decode the morse code, we can use the website http://rumkin.com/tools/cipher/morse.php, but it causes my browser to crash because there is just so much morse code. Instead, I took the relevant javascript code and wrote a nodejs program out of it.
+    > node decode-morse.js > decoded_morse.txt
+
+When we open up this decoded morse code file, we notice that the text is jumbled, but the numbers are not. This leads us to believe that it's a substituion cipher. So, let's use our favorite substituion cipher tool: http://www.quipqiup.com/index.php
+The outputted text is saved in decoded_substitution.txt
+
+Now, let's look for the flag:
+    > grep PASS decoded_substitution.txt
+
+Flag: TURDUCKEN-IS-QUITE-THE-GREASY-PROBLEM
