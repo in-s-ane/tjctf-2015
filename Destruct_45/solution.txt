@@ -1,0 +1,11 @@
+Looking at the source code, we have to modify the authorized int in the struct without modifying the canary. One thing that we notice is that the size of the message is 24 chars, which is different from the 32 char password and username.
+
+Looking at how the input is read in the read_in function, we notice that it does a normal read of 30 chars, where any newline or EOF is considered a null terminator. However, the output of read_in into buf is funny.
+    memcpy(p->user,buf,strlen(buf));
+It only copies the number of bytes in the buf string, but not the null terminator. So, when we send a 'd' command to display, we can have the message not be null terminated, which allows us to read the bytes of the int.
+
+Since the int canary is 4 bytes and a string prints out char by char, the output we get is 4 chars for the int. If we send that back with our message, we overflow message into the canary and can then overflow into the authorized to make it 1.
+
+I wrote up a quick python client to enable us to correctly see and send the output of the canary int since it may not always be in the printable ascii range.
+
+Flag: 5truc7byL1ghtn1ng
