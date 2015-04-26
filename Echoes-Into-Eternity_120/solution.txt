@@ -10,3 +10,10 @@ Then we can decompress the gzip
 
 The output looks a bit like base64 encoded data...
     > python decode.py
+
+However, it's actually rot13'd base64 encoded data...
+    >> a=open('getrekt.m9').readlines()
+    >> b=[x.strip() for x in a]
+    >> c=[x.decode('rot13').decode('base64') for x in b]
+    >> d='\n'.join(c)
+    >> open('output.txt', 'w').write(d)
