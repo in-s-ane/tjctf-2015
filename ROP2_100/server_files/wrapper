@@ -1,0 +1,5 @@
+cat wrapper
+#!/bin/sh
+
+cd /home/app
+exec /home/app/prog

