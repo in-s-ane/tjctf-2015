@@ -1,0 +1,43 @@
+Wow this was quite the binary exploitation journey. After reading up on articles and tutorials on buffer overflows and ropping, and some experience from pico, I finally got some gist of what I was doing.
+- http://www.reddit.com/r/hacking/comments/1wy610/exploit_tutorial_buffer_overflow/
+- https://ctf-team.vulnhub.com/picoctf-2014-no-overflow/
+
+From this, we immediately notice that it does rot13 on the entire ascii range, not just the letters, so we have to keep in mind that our input should be added by 13, since the program decrements by the same amount.
+
+We also notice that it takes in 255 bytes of input before it runs through the loop again and reads from rotinput. However, what's funny is that the size is based on how many characters are read by rotinput and then when it later checks to make sure that the buffer is not full, it uses strlen. This leads to a buffer overflow vulnerability on the buf array since we can write past the 256 bytes of memory allocated for it.
+
+We'll first fill up buf with 255 bytes of data, and then in the next iteration of the loop, we'll stick a null terminator in the front and then our payload. This will lead strlen to return 0 and 0+255 is still less than 256. Though, this will still copy X number of bytes from memcpy because it uses size from rotinput.
+
+Next we have to examine the binary to see what we have access to, in which we notice the following lines:
+    8048697:   c7 04 24 60 a0 04 08    movl   $0x804a060,(%esp)
+    804869e:   e8 ea fe ff ff          call   804858d <rotinput>
+This is basically showing how the pointer for the tmp array is being pushed to the stack as a argument for the rotinput function. So, we know that we can put some shellcode to pop a shell in the tmp array and have the $eip jump to it. Let's find a way to make $eip point to 0x804a060.
+
+First we'll fill up the buffer with 'A' * 255.
+Our next input will be a null terminator so that we can continue sending data without the program telling us that the buffer is full. Then we'll follow that by modifying $eip to 0x804a060. We can find how many sets of 4 bytes we need to buffer with by running the program in gdb and playing around with the number of sets. Once we get a SEGFAULT in the tmp array, we know that we've hit the jackpot. Turns out it's 3 sets of buffer for this program.
+Lastly, we'll fill up tmp with a NOP SLED and our shellcode to pop a shell.
+
+Before we can send this to the program, we need to reverse rot13 to nullify the rot13 the program does on the input. Once we send our amazing payload in, we'll use `cat - ` to keep the shell alive.
+
+All of this can be found in the attack.py script.
+
+    > (python attack.py; cat - ) | /problems/rot13/rot13 
+
+    ROT13-ATOR
+    Input strings. Send an empty newline to end.
+    Buffer is full, ending.
+    AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+    ls
+    Makefile  attack.py  payload  rot13  rot13.c
+    cd /problems/rot13
+    ls -l
+    total 16
+    -rw-r----- 1 root rot13   17 Apr 22 13:48 flag
+    -rwxr-sr-x 1 root rot13 7208 Apr 22 13:47 rot13
+    -rw-r--r-- 1 root rot13 1112 Apr 22 13:47 rot13.c
+    cat flag
+    2ROT13be5tc1ph3r
+
+Flag: 2ROT13be5tc1ph3r
+
+Fun problem overall, even though it took a LOT of attempts. LOTS of frustration too. But learned quite a lot.
