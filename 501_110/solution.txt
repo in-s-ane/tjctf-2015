@@ -1,0 +1,8 @@
+>> zbarimg $(ls | sort -n | grep "png") > factors.txt
+
+Then, open up factors.txt and remove everything other than the values of the factors.
+
+All we have to do is generated the TOTPs for each of these factors and then send
+them to the server in that order. Since we don't want to do this manually, we
+should write a script for it.
+See solve.py for the rest of the solution.txt
