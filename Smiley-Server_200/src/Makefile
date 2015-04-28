@@ -1,4 +1,4 @@
-GCC='gcc -Wall'
+GCC=gcc -Wall
 
 all: adminserver worker
 

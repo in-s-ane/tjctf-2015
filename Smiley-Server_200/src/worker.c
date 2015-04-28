@@ -102,6 +102,7 @@ int handleLogin(query_t *query, response_t *response) {
 	char fname[256];
 
 	sprintf(fname, "password.%ld.txt", query->userid);
+        printf("Looking for '%s'...\n", fname);
 
 	if (access(fname, R_OK) == -1) {
 		response->status = FAILURE;
@@ -116,6 +117,8 @@ int handleLogin(query_t *query, response_t *response) {
 	FILE *file = fopen(fname, "r");
 	int num = fread(password, 1, 256, file);
 	fclose(file);
+
+        printf("Comparing %d bytes of '%s' and '%s'\n", num, input, password);
 
 	if (!strncmp(password, input, num)) {
 		double credentials = 0;

@@ -1,0 +1,4 @@
+src/log
+src/errlog
+src/adminserver
+src/worker

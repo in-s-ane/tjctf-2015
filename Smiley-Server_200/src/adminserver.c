@@ -74,7 +74,7 @@ int readQuery(query_t *query) {
 	snprintf(data, 256, "FROM %ld;%s", query->userid, indata);
 
 	query->action = action;
-	memcpy(query->data, data, 256);
+	memcpy(query->data, data, 256); // hmmm they use memcpy here
 
 	return RSTATUS_QUERY;
 }
