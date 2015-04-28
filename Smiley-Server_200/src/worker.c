@@ -35,8 +35,11 @@ int sendResponse(response_t *response) {
 char *parseData(query_t *query) {
 	char *prebuf;
 	prebuf = strtok(query->data, ";"); // Read the "FROM <id>;" part
+        printf("prebuf: '%s'\n", prebuf);
 
-	return strtok(NULL, "");
+        char *retValue = strtok(NULL, "");
+        printf("returned parse data: '%s'\n", retValue);
+        return retValue;
 }
 
 int checkCredentials(query_t *query) {
@@ -46,6 +49,7 @@ int checkCredentials(query_t *query) {
 int needPermissions(response_t *response) {
 	response->status = FAILURE;
 	snprintf(response->data, 256, "%s", "You need the requisite authentication to perform this action");
+        printf("Ya need permissions.\n");
 
 	return 0;
 }
@@ -181,7 +185,9 @@ int run() {
 
 	while (1) {
 		recvQuery(&query);
+                printf("Query: {\n\tcredentials: %f\n\tuserid: %ld\n\tdata: %s\n}\n", query.credentials, query.userid, query.data);
 		handle(&query, &response);
+                printf("Response: {\n\tdata: %s\n}\n", response.data);
 		sendResponse(&response);
 	}
 
@@ -200,14 +206,19 @@ int setupAccess() {
 	buf[num] = '\0';
 	ACCESS = strtod(buf, NULL);
 	fclose(afile);
+        printf("ACCESS: %f\n", ACCESS);
 
 	return 0;
 }
 
 int main(int argc, char **argv) {
-	freopen("/dev/null", "w", stdout);
+        setbuf(freopen("log", "a", stdout), NULL);
+        setbuf(freopen("errlog", "a", stderr), NULL);
+        printf("\n-------------------------------------\nStarted worker!\n");
 	setupPipes();
+        printf("Pipes setup!\n");
 	setupAccess();
+        printf("Access setup!\n");
 
 	return run();
 }

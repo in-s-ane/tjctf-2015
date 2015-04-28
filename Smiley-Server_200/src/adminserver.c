@@ -27,7 +27,7 @@ int readQuery(query_t *query) {
 	} else if (len == 1) {
 		return RSTATUS_SKIP;
 	}
-	lineptr[len-1] = '\0'; // We lose the last character
+	lineptr[len-1] = '\0';
 	char *actionText, *userText, *indata;
 	action_t action;
 	long userid;
@@ -61,7 +61,9 @@ int readQuery(query_t *query) {
 	if (action == LOGIN_ACTION) {
 		char *userText;
 		userText = strtok(indata, " ");
+                printf("Got userid: '%s'\n", userText);
 		indata = strtok(NULL, "");
+                printf("Got indata: '%s'\n", indata);
 		if (!userText || !indata) {
 			printf("You need to specify both a userid and a password\n");
 			return RSTATUS_SKIP;
@@ -150,8 +152,8 @@ int setupWorker() {
 
 	srand(time(NULL) + clock());
 
-	snprintf(wpipe, 100, "/tmp/servto.%d.fifo", rand());
-	snprintf(rpipe, 100, "/tmp/servfr.%d.fifo", rand());
+	snprintf(wpipe, 100, "tmp/servto.%d.fifo", rand());
+	snprintf(rpipe, 100, "tmp/servfr.%d.fifo", rand());
 
 	mkfifo(wpipe, 0666);
 	mkfifo(rpipe, 0666);
