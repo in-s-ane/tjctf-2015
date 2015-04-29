@@ -1,0 +1,83 @@
+Link: http://cdn.tjctf.org/problems/b0981112a056ff73ddd466ab9637872e341031a8a3fa82508eb286c6fe331bd295dbca765be93723083a163d6536f29d655f35f3c475fa1986d1e24799e6db86-Gallifreyan_Better.svg
+
+Go from the right large circle cluster counter clockwise. Read each large circle cluster starting from the upper right -> counter clockwise.
+
+Key:
+
+Dot = 1
+Ring = 2
+Ring w/ Dot = 3
+Large dot = 4
+
+1123 = T
+1113 = H
+1224 = E
+0000 = _
+1111 = D
+4433 = A
+2222 = L
+1224 = E
+1124 = K
+1444 = S
+0000 = _
+4433 = A
+2223 = R
+1224 = E
+0000 = _
+2243 = I
+1122 = N
+2333 = V
+4433 = A
+1111 = D
+2243 = I
+1122 = N
+1114 = G
+0000 = .
+
+1123 = T
+1113 = H
+1224 = E
+0000 = _
+1333 = F
+2222 = L
+4433 = A
+1114 = G
+0000 = _
+2243 = I
+1444 = S
+0000 = _
+2433 = ?
+1443 = O
+4433 = A
+1123 = T
+0000 = _
+1224 = E
+4444 = ?
+1224 = E
+1444 = S
+0000 = .
+
+2222 = L
+1443 = O
+2333 = V
+1224 = E
+0000 = _
+1123 = T
+1113 = H
+1224 = E
+0000 = _
+1111 = D
+1443 = O
+1244 = C
+1123 = T
+1443 = O
+2223 = R
+0000 = _
+
+Use the Doctor Crib :) Every message will be something about an invasion, daleks, cybermen, the tardis, time lords, or gallifrey.
+
+The substitution is one to one and the only remaining letters are BJMPQUWXYZ.
+
+?OAT E?ES --> BOAT EYES.
+
+Flag: boat eyes
