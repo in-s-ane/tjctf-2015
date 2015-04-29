@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 
 # Tribute to HSCTF 2014's 20XX
 
@@ -45,6 +46,7 @@ def superincreasing_sequence(n):
 
 def merkle_hellman_knapsack(message):
     b = ''.join(format(ord(i),'08b') for i in message)
+    print(str(len(b)))
     ss = superincreasing_sequence(len(b))
 
     p = probable_prime(128)
@@ -64,6 +66,7 @@ def main():
     # (w, r, q) is the private key
     print("Private Key:")
     print("Superincreasing Sequence:", private[0])
+    print(str(len(private[0])))
     print("Multiplier:", private[1])
     print("Modulus:", private[2])
     print()

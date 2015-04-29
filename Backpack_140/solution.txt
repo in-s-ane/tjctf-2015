@@ -1,5 +1,7 @@
-The public key has 96 numbers, so the length of the ciphertext is 96/8 = 12
-characters.
+From the given information, we can immediately conclude that the length of the
+ciphertext is 12 characters because the public key has 96 numbers, so the length
+of the ciphertext must be 96/8 = 12 characters.
 
+See solve.py for the rest of the solution.
 
-
+In the end, our flag is: rememberdora
